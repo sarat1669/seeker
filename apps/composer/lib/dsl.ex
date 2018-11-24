@@ -121,6 +121,10 @@ defmodule Composer.DSL do
     { :if, [ do_convert(conditions), do_convert(first_clause), do_convert(second_clause) ] }
   end
 
+  def do_convert(%{ "type" => "list", "arguments" => elements }) do
+    { :list, Enum.map(elements, &do_convert/1) }
+  end
+
   def do_convert(%{ "type" => "sum", "arguments" => arguments }) do
     { :sum, Enum.map(arguments, &do_convert/1) }
   end

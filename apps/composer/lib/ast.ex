@@ -163,6 +163,12 @@ defmodule Composer.AST do
     end
   end
 
+  def do_convert({ :list, elements }) do
+    Enum.map(elements, fn(element) ->
+      quote do: unquote do_convert(element)
+    end)
+  end
+
   def do_convert({ :sum, arguments }) do
     [ h | t ] = arguments
     value = quote do: unquote do_convert(h)
@@ -178,7 +184,7 @@ defmodule Composer.AST do
 
   def do_convert(false), do: false
 
-  def do_convert(x) when is_binary(x), do: x
+  def do_convert(x) when is_atom(x), do: x
 
   def do_convert(x) when is_number(x), do: x
 end
