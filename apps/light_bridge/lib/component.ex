@@ -4,8 +4,8 @@ defmodule LightBridge.Component do
     outports = Enum.reduce(binding, %{}, fn({k, v}, acc) -> Map.put(acc, k, v) end)
     outports_config
     |> Map.get(:links)
-    |> Enum.each(fn(%{ from_port: from_port, to_port: to_port, to_pid: to_pid }) ->
-      send(to_pid, { to_port, Map.get(outports, from_port) })
+    |> Enum.each(fn(%{ from_port: from_port, to_port: to_port, to_node: to_node }) ->
+      send(to_node, { to_port, Map.get(outports, from_port) })
     end)
   end
 
