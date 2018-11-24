@@ -1,18 +1,11 @@
 defmodule Composer do
-  @moduledoc """
-  Documentation for Composer.
-  """
+  alias Composer.DSL
+  alias Composer.AST
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Composer.hello
-      :world
-
-  """
-  def hello do
-    :world
+  def parse(json_path, arguments) do
+    {:ok, json } = File.read(json_path)
+    ast = DSL.convert(json)
+    elixir_ast = AST.convert(ast)
+    Code.eval_quoted(elixir_ast, arguments)
   end
 end
