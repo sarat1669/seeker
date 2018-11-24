@@ -1,18 +1,26 @@
 defmodule LightBridge do
-  @moduledoc """
-  Documentation for LightBridge.
-  """
+  alias Composer.DSL
+  alias Composer.AST
 
-  @doc """
-  Hello world.
+  def run(json_path) do
+    {:ok, json } = File.read(json_path)
+    ast = DSL.convert(json)
+    elixir_ast = AST.convert(ast)
 
-  ## Examples
+    { :ok, pid } = Task.start_link(LightBridge.Component, :loop, [
+       %{},
+       %{ ports: [ :a, :b ] },
+       %{
+         ports: [ :c ],
+         links: [
+           %{ from_port: :c, to_port: :output, to_pid: self() }
+         ]
+       },
+       elixir_ast,
+       self()
+    ])
 
-      iex> LightBridge.hello
-      :world
-
-  """
-  def hello do
-    :world
+    send(pid, { :a, 1 })
+    send(pid, { :b, 1 })
   end
 end
