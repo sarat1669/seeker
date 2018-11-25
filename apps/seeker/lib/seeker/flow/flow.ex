@@ -296,6 +296,6 @@ defmodule Seeker.Flow do
     method = Map.get(conn, :method)
     id = Map.get(params, "id")
     workflow = get_workflow!(id)
-    Executor.get_config(workflow, params)
+    Executor.execute(workflow, params)
   end
 end

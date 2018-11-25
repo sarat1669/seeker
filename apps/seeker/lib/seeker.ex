@@ -1,9 +1,13 @@
 defmodule Seeker do
   @moduledoc """
-  Seeker keeps the contexts that define your domain
-  and business logic.
+  Seeker is a Serverless framework built on top elixir.
 
-  Contexts are also responsible for managing your data, regardless
-  if it comes from the database, an external API or others.
+  A function written in the DSL defined in `Composer.DSL` can be used to create a component.
+
+  Component is the most basic element of the framework.
+
+  Once components are defined, they can be linked to each other by creating Workflows.
+
+  Each workflow is exposed via an API, which can then be accessed across the web.
   """
 end

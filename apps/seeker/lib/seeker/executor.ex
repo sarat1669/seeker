@@ -1,9 +1,15 @@
 defmodule Seeker.Executor do
+  @moduledoc """
+  Generates the workflow graph using the components and executes it with the given params.
+  """
   alias Seeker.Flow
   alias LightBridge.Instance
   alias LightBridge.Workflow
 
-  def get_config(workflow, params) do
+  @doc """
+  Workflow from the Workflow model and the actual params from the controller
+  """
+  def execute(workflow, params) do
     arguments = workflow
     |> Map.get(:params)
     |> Enum.reduce(Map.new, fn(param, acc) ->

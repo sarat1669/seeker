@@ -82,13 +82,21 @@ defmodule LightBridge.Workflow do
   alias Composer.DSL
   alias Composer.AST
 
+  @doc """
+  Parses the json and generates the json
+  """
   def convert(json) do
     json
     |> Poison.decode!
     |> do_convert
   end
 
-  defp do_convert(%{ "nodes" => nodes, "edges" => edges }) do
+  @doc """
+  Generates the graph from the nodes and edges.
+
+  It expects the input as `%{ "nodes" => nodes, "edges" => edges }`
+  """
+  def do_convert(%{ "nodes" => nodes, "edges" => edges }) do
     Graph.new(type: :directed)
     |> add_nodes(nodes)
     |> add_edges(edges)
