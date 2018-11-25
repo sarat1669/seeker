@@ -1,7 +1,5 @@
 defmodule Seeker.Flow do
-  @moduledoc """
-  The Flow context.
-  """
+  @moduledoc false
 
   import Ecto.Query, warn: false
   alias Seeker.Repo

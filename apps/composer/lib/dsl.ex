@@ -1,10 +1,142 @@
 defmodule Composer.DSL do
+  @moduledoc """
+  Provies methods to generate custom AST from JSON DSL.
+
+  The DSL is made of expressions and each expression has a type, arguments
+
+  Example: `{ "type": "string", "arguments": [ "factor18" ]}`
+
+  Currently the following expressions are allowed:
+
+  type `null` accepts no arguments
+  `{ "type": "null" }`
+
+  type `atom` accepts a single string as an argument
+  `{ "type": "atom", "arguments" => [ "a" ] }`
+
+  type `string` accepts a single string as an argument
+  `{ "type": "string", "arguments" => [ "a" ] }`
+
+  type `var` accepts an atom expression as an argument
+  `{ "type": "var", "arguments" => [{ "type": "atom", "arguments" => [ "a" ] }] }`
+
+  type `!` accepts an expression as an argument
+
+  type `+` accepts an expression as an argument
+
+  type `-` accepts an expression as an argument
+
+  type `abs` accepts an expression as an argument
+
+  type `=` accepts two expressions as arguments
+
+  type `!=` accepts two expressions as arguments
+
+  type `!==` accepts two expressions as arguments
+
+  type `&&` accepts two expressions as arguments
+
+  type `||` accepts two expressions as arguments
+
+  type `*` accepts two expressions as arguments
+
+  type `++` accepts two expressions as arguments
+
+  type `+` accepts two expressions as arguments
+
+  type `--` accepts two expressions as arguments
+
+  type `-` accepts two expressions as arguments
+
+  type `/` accepts two expressions as arguments
+
+  type `<` accepts two expressions as arguments
+
+  type `<=` accepts two expressions as arguments
+
+  type `<>` accepts two expressions as arguments
+
+  type `==` accepts two expressions as arguments
+
+  type `===` accepts two expressions as arguments
+
+  type `>` accepts two expressions as arguments
+
+  type `>=` accepts two expressions as arguments
+
+  type `rem` accepts two expressions as arguments
+
+  type `if` accepts two/three expressions as arguments
+
+  The first argument is the conditions, second expression is executed if the conditions evaluate
+  to true and the third argument is evaluated when the conditions evaluate to false
+
+  type `list` accepts a finite number of expressions as arguments
+
+  type `sum` accepts a finite number of expressions as arguments
+
+  type `block` accepts a finite number of expressions as arguments
+
+  ## Example DSL
+
+  ```elixir
+  {
+    "type": "block", "arguments": [
+      {
+        "type": "=", "arguments": [
+          { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "acc" ] }] },
+          {
+            "type": "sum", "arguments": [
+              { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "a" ] }] },
+              { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "b" ] }] },
+              { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "c" ] }] }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "block", "arguments": [
+          {
+            "type": "=", "arguments": [
+              { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "a" ] }] },
+              100
+            ]
+          },
+          {
+            "type": "sum", "arguments": [
+              { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "acc" ] }] },
+              { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "a" ] }] }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  ```
+  """
+
+  @doc """
+  Parses the DSL given in a json file and generates custom AST which can be consumed by
+  Composer.AST to generate elixir AST
+
+  ## Example
+     iex> json = File.read!("test/support/var.json")
+     iex> Composer.DSL.convert(json)
+     {:var, :a}
+  """
   def convert(json) do
     json
     |> Poison.decode!
     |> do_convert
   end
 
+  @doc """
+  Converts the DST to custom AST
+
+  ## Example
+     iex> Composer.DSL.do_convert(%{ "type" => "+", "arguments" => [ 10, 20 ]})
+     { :+, [10, 20] }
+  """
   def do_convert(%{ "type" => "null" }) do
     nil
   end

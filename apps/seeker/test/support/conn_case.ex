@@ -18,7 +18,7 @@ defmodule SeekerWeb.ConnCase do
   using do
     quote do
       # Import conveniences for testing with connections
-      use Phoenix.ConnTest
+      use Phoenix.ConnTest, moduledoc: false
       import SeekerWeb.Router.Helpers
 
       # The default endpoint for testing

@@ -1,0 +1,12 @@
+{
+  "type": "=", "arguments": [
+    { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "d" ] }] },
+    {
+      "type": "sum", "arguments": [
+        { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "a" ] }] },
+        { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "b" ] }] },
+        { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "c" ] }] }
+      ]
+    }
+  ]
+}

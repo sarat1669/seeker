@@ -1,25 +1,9 @@
 defmodule SeekerWeb do
-  @moduledoc """
-  The entrypoint for defining your web interface, such
-  as controllers, views, channels and so on.
-
-  This can be used in your application as:
-
-      use SeekerWeb, :controller
-      use SeekerWeb, :view
-
-  The definitions below will be executed for every view,
-  controller, etc, so keep them short and clean, focused
-  on imports, uses and aliases.
-
-  Do NOT define functions inside the quoted expressions
-  below. Instead, define any helper function in modules
-  and import those modules here.
-  """
+  @moduledoc false
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: SeekerWeb
+      use Phoenix.Controller, namespace: SeekerWeb, moduledoc: false
       import Plug.Conn
       import SeekerWeb.Router.Helpers
       import SeekerWeb.Gettext
@@ -29,7 +13,7 @@ defmodule SeekerWeb do
   def view do
     quote do
       use Phoenix.View, root: "lib/seeker_web/templates",
-                        namespace: SeekerWeb
+                        namespace: SeekerWeb, moduledoc: false
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 2, view_module: 1]

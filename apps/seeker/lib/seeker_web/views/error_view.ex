@@ -1,4 +1,6 @@
 defmodule SeekerWeb.ErrorView do
+  @moduledoc false
+
   use SeekerWeb, :view
 
   # If you want to customize a particular status code

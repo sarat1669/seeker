@@ -1,4 +1,6 @@
 defmodule SeekerWeb.WorkflowView do
+  @moduledoc false
+
   use SeekerWeb, :view
   alias SeekerWeb.WorkflowView
 

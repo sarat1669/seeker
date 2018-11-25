@@ -1,8 +1,15 @@
 defmodule Composer.AST do
-  def convert(ast) do
-    do_convert(ast)
-  end
+  @moduledoc """
+  Converts the custom AST into elixir AST
+  """
 
+  @doc """
+  Converts the custom AST into elixir AST
+
+  ## Example
+     iex> Composer.AST.do_convert({ :+, [ 10, 20 ] })
+     {:+, [context: Composer.AST, import: Kernel], [ 10, 20 ]}
+  """
   def do_convert({ :block, args }) do
     { :__block__, [], Enum.map(args, &do_convert/1) }
   end

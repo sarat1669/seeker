@@ -1,0 +1,5 @@
+{
+  "type": "var", "arguments": [
+    { "type": "atom", "arguments": [ "a" ] }
+  ]
+}

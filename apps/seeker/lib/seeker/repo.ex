@@ -1,4 +1,6 @@
 defmodule Seeker.Repo do
+  @moduledoc false
+
   use Ecto.Repo, otp_app: :seeker
 
   @doc """

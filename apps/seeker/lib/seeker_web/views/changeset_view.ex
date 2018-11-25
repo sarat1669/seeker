@@ -1,4 +1,6 @@
 defmodule SeekerWeb.ChangesetView do
+  @moduledoc false
+
   use SeekerWeb, :view
 
   @doc """

@@ -1,4 +1,6 @@
 defmodule SeekerWeb.Router do
+  @moduledoc false
+
   use SeekerWeb, :router
 
   pipeline :browser do

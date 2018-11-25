@@ -44,6 +44,6 @@ defmodule LightBridge.Workflow do
   defp compile_code(code) do
     code
     |> DSL.do_convert
-    |> AST.convert
+    |> AST.do_convert
   end
 end

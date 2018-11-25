@@ -1,4 +1,6 @@
 defmodule SeekerWeb.ComponentView do
+  @moduledoc false
+
   use SeekerWeb, :view
   alias SeekerWeb.ComponentView
 
