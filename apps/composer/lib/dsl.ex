@@ -5,8 +5,8 @@ defmodule Composer.DSL do
     |> do_convert
   end
 
-  def do_convert(%{ "type" => "block", "arguments" => arguments }) do
-    { :block, Enum.map(arguments, &do_convert/1) }
+  def do_convert(%{ "type" => "null" }) do
+    nil
   end
 
   def do_convert(%{ "type" => "atom", "arguments" => [ word ] }) do
@@ -114,7 +114,7 @@ defmodule Composer.DSL do
   end
 
   def do_convert(%{ "type" => "if", "arguments" => [ conditions, first_clause ] }) do
-    do_convert(%{ "type" => "if", "arguments" => [ conditions, first_clause, "null" ] })
+    do_convert(%{ "type" => "if", "arguments" => [ conditions, first_clause, %{ "type" => "null" } ] })
   end
 
   def do_convert(%{ "type" => "if", "arguments" => [ conditions, first_clause, second_clause ] }) do
@@ -129,7 +129,9 @@ defmodule Composer.DSL do
     { :sum, Enum.map(arguments, &do_convert/1) }
   end
 
-  def do_convert("null"), do: nil
+  def do_convert(%{ "type" => "block", "arguments" => arguments }) do
+    { :block, Enum.map(arguments, &do_convert/1) }
+  end
 
   def do_convert(true), do: true
 

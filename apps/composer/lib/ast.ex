@@ -186,5 +186,7 @@ defmodule Composer.AST do
 
   def do_convert(x) when is_atom(x), do: x
 
+  def do_convert(x) when is_binary(x), do: x
+
   def do_convert(x) when is_number(x), do: x
 end
