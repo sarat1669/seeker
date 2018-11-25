@@ -1,0 +1,9 @@
+curl -X POST \
+  http://localhost:4000/api/workflows/1/execute \
+  -H 'Cache-Control: no-cache' \
+  -H 'Content-Type: application/json' \
+  -H 'Postman-Token: 95c9bc5e-b2cd-4275-8b7d-4efcc7517776' \
+  -d '{
+	"a": 10,
+	"b": 12
+}'

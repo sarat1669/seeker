@@ -1,0 +1,23 @@
+curl -X POST \
+  http://localhost:4000/api/components \
+  -H 'Cache-Control: no-cache' \
+  -H 'Content-Type: application/json' \
+  -H 'Postman-Token: 2ddb03eb-86b4-4b22-bfdb-a2abb7ff10d2' \
+  -d '{
+	"component": {
+		"name": "adder",
+		"code": {
+        	"type": "=", "arguments": [
+            	{ "type": "var", "arguments": [ { "type": "atom", "arguments": [ "c" ] } ] },
+            	{
+           			"type": "+", "arguments": [
+               			{ "type": "var", "arguments": [ { "type": "atom", "arguments": [ "a" ] } ] },
+               			{ "type": "var", "arguments": [ { "type": "atom", "arguments": [ "b" ] } ] }
+           			]
+           		}
+			]
+		},
+		"inports": [ "a", "b" ],
+		"outports": [ "c" ]
+	}
+}'

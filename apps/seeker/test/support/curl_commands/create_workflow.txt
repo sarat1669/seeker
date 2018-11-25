@@ -1,0 +1,19 @@
+curl -X POST \
+  http://localhost:4000/api/workflows \
+  -H 'Cache-Control: no-cache' \
+  -H 'Content-Type: application/json' \
+  -H 'Postman-Token: 1576f1dd-f089-4f48-a97c-680f3525202a' \
+  -d '{
+	"workflow": {
+		"name": "test",
+		"params": [ "a", "b" ],
+		"nodes": [
+			{ "id": 0, "type": "in", "component": "1" },
+			{ "id": 1, "type": "out", "component": "1" }
+		],
+		"edges": [
+			{ "source_node": 0, "target_node": 1, "source_port": "c", "target_port": "a" },
+    		{ "source_node": 0, "target_node": 1, "source_port": "c", "target_port": "b" }
+		]
+	}
+}'
