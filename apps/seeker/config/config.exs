@@ -7,20 +7,21 @@ use Mix.Config
 
 # General application configuration
 config :seeker,
+  namespace: Seeker,
   ecto_repos: [Seeker.Repo]
 
 # Configures the endpoint
-config :seeker, Seeker.Endpoint,
+config :seeker, SeekerWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "c58yeV9fGt+1txvQNe4WvwL2h3YStWAw1c9PoxrMuEoADdmIOn+jyL5gBJ3xzW3H",
-  render_errors: [view: Seeker.ErrorView, accepts: ~w(html json)],
+  secret_key_base: "rMCHEqorh1RRJnrClkeChg0VH60Z5zhA1v2hGG/qo1xuvo51pSnpSaAhpslZubHC",
+  render_errors: [view: SeekerWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Seeker.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
+  metadata: [:user_id]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
