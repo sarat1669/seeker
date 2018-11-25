@@ -5,7 +5,7 @@ defmodule Seeker.Flow do
 
   import Ecto.Query, warn: false
   alias Seeker.Repo
-
+  alias Seeker.Executor
   alias Seeker.Flow.Component
 
   @doc """
@@ -196,5 +196,108 @@ defmodule Seeker.Flow do
   """
   def change_component(%Component{} = component) do
     Component.changeset(component, %{})
+  end
+
+  alias Seeker.Flow.Workflow
+
+  @doc """
+  Returns the list of workflows.
+
+  ## Examples
+
+      iex> list_workflows()
+      [%Workflow{}, ...]
+
+  """
+  def list_workflows do
+    Repo.all(Workflow)
+  end
+
+  @doc """
+  Gets a single workflow.
+
+  Raises `Ecto.NoResultsError` if the Workflow does not exist.
+
+  ## Examples
+
+      iex> get_workflow!(123)
+      %Workflow{}
+
+      iex> get_workflow!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_workflow!(id), do: Repo.get!(Workflow, id)
+
+  @doc """
+  Creates a workflow.
+
+  ## Examples
+
+      iex> create_workflow(%{field: value})
+      {:ok, %Workflow{}}
+
+      iex> create_workflow(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_workflow(attrs \\ %{}) do
+    %Workflow{}
+    |> Workflow.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a workflow.
+
+  ## Examples
+
+      iex> update_workflow(workflow, %{field: new_value})
+      {:ok, %Workflow{}}
+
+      iex> update_workflow(workflow, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_workflow(%Workflow{} = workflow, attrs) do
+    workflow
+    |> Workflow.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Workflow.
+
+  ## Examples
+
+      iex> delete_workflow(workflow)
+      {:ok, %Workflow{}}
+
+      iex> delete_workflow(workflow)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_workflow(%Workflow{} = workflow) do
+    Repo.delete(workflow)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking workflow changes.
+
+  ## Examples
+
+      iex> change_workflow(workflow)
+      %Ecto.Changeset{source: %Workflow{}}
+
+  """
+  def change_workflow(%Workflow{} = workflow) do
+    Workflow.changeset(workflow, %{})
+  end
+
+  def execute_workflow(conn, params) do
+    method = Map.get(conn, :method)
+    id = Map.get(params, "id")
+    workflow = get_workflow!(id)
+    Executor.get_config(workflow, params)
   end
 end

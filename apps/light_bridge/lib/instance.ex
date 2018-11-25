@@ -99,7 +99,6 @@ defmodule LightBridge.Instance do
     else
       [{ :label, data }] = Graph.vertex_labels(graph, node)
       %{ outports: outports } = data
-      IO.inspect(self())
       links ++ Enum.map(outports, fn(outport) ->
         %{ from_port: outport, to_port: outport, to_node: self() }
       end)

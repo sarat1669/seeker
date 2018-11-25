@@ -22,6 +22,9 @@ defmodule SeekerWeb.Router do
   scope "/api", SeekerWeb do
     pipe_through :api
 
+    get "/workflows/:id/execute", WorkflowController, :execute
+    post "/workflows/:id/execute", WorkflowController, :execute
+    resources "/workflows", WorkflowController, except: [:new, :edit]
     resources "/components", ComponentController, except: [:new, :edit]
   end
 end
