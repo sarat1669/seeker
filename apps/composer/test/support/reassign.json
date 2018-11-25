@@ -1,0 +1,32 @@
+{
+  "type": "block", "arguments": [
+    {
+      "type": "=", "arguments": [
+        { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "acc" ] }] },
+        {
+          "type": "sum", "arguments": [
+            { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "a" ] }] },
+            { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "b" ] }] },
+            { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "c" ] }] }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "block", "arguments": [
+        {
+          "type": "=", "arguments": [
+            { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "a" ] }] },
+            100
+          ]
+        },
+        {
+          "type": "sum", "arguments": [
+            { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "acc" ] }] },
+            { "type": "var", "arguments": [{ "type": "atom", "arguments": [ "a" ] }] }
+          ]
+        }
+      ]
+    }
+  ]
+}
