@@ -1,4 +1,84 @@
 defmodule LightBridge.Workflow do
+  @moduledoc """
+  Converts the workflow defined in the json into a Graph which can be used by LightBridge.Instance
+
+  A workflow is defined using an acyclic graph. The nodes of the graph are the components and the
+  links between them define the connections.
+
+  #### Node
+  A node has an `id`, `type`, `component`
+
+  `id ` should be unique for each node
+
+  A node can be of three types: "in", "normal", "out"
+
+  #### Component
+  A component consists of `inports`, `outports`, `code`
+
+  `inports` is a list of atoms, which will be provided as the binding to the worflow for execution
+
+  `outports` is a list of atoms from the binding which will be used to construct the response object
+
+  `code` is the DSL which is defined in `Composer.DSL`
+
+  #### Edges
+  An edge has a `sorce_node`, `source_port`, `target_node`, `target_port`
+
+  `source_node` is the ID of the node from which the connection is originating
+
+  `source_port` is the port of the node from which the connection is originating
+
+  `target_node` is the ID of the node to which the connection is going
+
+  `target_port` is the port of the node to which the connection is going
+
+  ### Sample Workflow JSON
+
+  ```elixir
+  {
+    "nodes": [
+      {
+        "id": 0, "type": "in", "component": {
+          "inports": [ "a", "b" ],
+          "outports": [ "c" ],
+          "code": {
+            "type": "=", "arguments": [
+              { "type": "var", "arguments": [ { "type": "atom", "arguments": [ "c" ] } ] },
+              {
+                "type": "+", "arguments": [
+                  { "type": "var", "arguments": [ { "type": "atom", "arguments": [ "a" ] } ] },
+                  { "type": "var", "arguments": [ { "type": "atom", "arguments": [ "b" ] } ] }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": 1, "type": "out", "component": {
+          "inports": [ "a", "b" ],
+          "outports": [ "c" ],
+          "code": {
+            "type": "=", "arguments": [
+              { "type": "var", "arguments": [ { "type": "atom", "arguments": [ "c" ] } ] },
+              {
+                "type": "+", "arguments": [
+                  { "type": "var", "arguments": [ { "type": "atom", "arguments": [ "a" ] } ] },
+                  { "type": "var", "arguments": [ { "type": "atom", "arguments": [ "b" ] } ] }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "edges": [
+      { "source_node": 0, "target_node": 1, "source_port": "c", "target_port": "a" },
+      { "source_node": 0, "target_node": 1, "source_port": "c", "target_port": "b" }
+    ]
+  }
+  ```
+  """
   alias Composer.DSL
   alias Composer.AST
 
@@ -8,13 +88,13 @@ defmodule LightBridge.Workflow do
     |> do_convert
   end
 
-  def do_convert(%{ "nodes" => nodes, "edges" => edges }) do
+  defp do_convert(%{ "nodes" => nodes, "edges" => edges }) do
     Graph.new(type: :directed)
     |> add_nodes(nodes)
     |> add_edges(edges)
   end
 
-  def add_nodes(graph, nodes) do
+  defp add_nodes(graph, nodes) do
     Enum.reduce(nodes, graph, fn(%{ "id" => id, "component" => component, "type" => type }, graph) ->
       %{ "inports" => inports, "outports" => outports, "code" => code } = component
       Graph.add_vertex(graph, id, label: %{
@@ -26,7 +106,7 @@ defmodule LightBridge.Workflow do
     end)
   end
 
-  def add_edges(graph, edges) do
+  defp add_edges(graph, edges) do
     Enum.reduce(edges, graph, fn(edge, graph) ->
       %{
         "source_node" => source_node,

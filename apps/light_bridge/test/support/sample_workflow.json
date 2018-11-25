@@ -1,0 +1,42 @@
+{
+  "nodes": [
+    {
+      "id": 0, "type": "in", "component": {
+        "inports": [ "a", "b" ],
+        "outports": [ "c" ],
+        "code": {
+          "type": "=", "arguments": [
+            { "type": "var", "arguments": [ { "type": "atom", "arguments": [ "c" ] } ] },
+            {
+              "type": "+", "arguments": [
+                { "type": "var", "arguments": [ { "type": "atom", "arguments": [ "a" ] } ] },
+                { "type": "var", "arguments": [ { "type": "atom", "arguments": [ "b" ] } ] }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 1, "type": "out", "component": {
+        "inports": [ "a", "b" ],
+        "outports": [ "c" ],
+        "code": {
+          "type": "=", "arguments": [
+            { "type": "var", "arguments": [ { "type": "atom", "arguments": [ "c" ] } ] },
+            {
+              "type": "+", "arguments": [
+                { "type": "var", "arguments": [ { "type": "atom", "arguments": [ "a" ] } ] },
+                { "type": "var", "arguments": [ { "type": "atom", "arguments": [ "b" ] } ] }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "edges": [
+    { "source_node": 0, "target_node": 1, "source_port": "c", "target_port": "a" },
+    { "source_node": 0, "target_node": 1, "source_port": "c", "target_port": "b" }
+  ]
+}

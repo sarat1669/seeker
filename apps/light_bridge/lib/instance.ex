@@ -1,18 +1,38 @@
 defmodule LightBridge.Instance do
+  @moduledoc """
+    Instance is implemented using GenServer It takes a graph and initializes the nodes as processes.
+    And establishes the connections between the processes.
+
+    Once the workflow execution is complete, it sends a message to the callback_pid with the
+    response
+  """
+
   use GenServer
 
+  @doc """
+  Starts the GenServer with the graph generated from json using `LightBridge.Workflow`.
+  """
   def start_link(graph) do
     GenServer.start_link(__MODULE__, { :ok, graph })
   end
 
+  @doc """
+  Sends the message to the component of type :in
+  """
   def send_message(server, message) do
     GenServer.call(server, { :send_message, message })
   end
 
+  @doc """
+  Register the caller pid as :callback_pid and sends a message once the execution is done
+  """
   def register_callback(server) do
     GenServer.call(server, { :register_callback })
   end
 
+  @doc """
+  Initializes the nodes as processes and establishes the connections between the processes.
+  """
   def init({ :ok, graph }) do
     initial_state = Map.new()
     |> Map.put(:response, %{})
