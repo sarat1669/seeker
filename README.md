@@ -99,3 +99,6 @@ To execute a workflow use this [CURL](https://github.com/spawnfest/factor18/blob
 - [ ] Support for long running tasks
 - [ ] Finite State Machine
 - [ ] Add UI Support
+
+#### NOTE
+`Composer` app is inspired by my previous project [Virta](https://github.com/factor18/virta)
